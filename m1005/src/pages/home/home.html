@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list no-lines>
+    <button ion-item *ngFor="let item of products" (click)="itemSelected(item)">
+      {{ item.name }}
+    </button>
+  </ion-list>
+</ion-content>
