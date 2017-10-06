@@ -8,11 +8,16 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { DbServiceProvider } from '../providers/db-service/db-service';
 import { ProductServiceProvider } from '../providers/product-service/product-service';
+import {SQLite} from "@ionic-native/sqlite";
+import {ProductModalPage} from "../pages/product-modal/product-modal";
+import {ProductDetailPage} from "../pages/product-detail/product-detail";
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    ProductModalPage,
+    ProductDetailPage
   ],
   imports: [
     BrowserModule,
@@ -21,11 +26,14 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ProductModalPage,
+    ProductDetailPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DbServiceProvider,
     ProductServiceProvider

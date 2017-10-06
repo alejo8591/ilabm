@@ -17,9 +17,11 @@ export class DbServiceProvider {
       })
       .then((db: SQLiteObject)=>{
         this.database = db;
-        this.createTable().then(() => {
-          this.dbReady.next(true);
-        });
+        this.createTable()
+          .then(() => {
+            this.dbReady.next(true);
+          })
+          .catch(err=>console.error("error detected creating tables: ", err));
       })
     });
   }
@@ -67,7 +69,7 @@ export class DbServiceProvider {
   getProduct(id: number) {
     return this.isReady()
       .then(() => {
-        return this.database.executeSql(`SELECT * FROM list WHERE id = ${id}`, [])
+        return this.database.executeSql(`SELECT * FROM products WHERE id = ${id}`, [])
           .then(data => {
             if(data.rows.length) return data.rows.item(0);
             return null;
@@ -80,7 +82,7 @@ export class DbServiceProvider {
   addProduct(name: string) {
     return this.isReady()
       .then(() => {
-        return this.database.executeSql(`INSERT INTO product(name) VALUES ('${name}');`, {})
+        return this.database.executeSql(`INSERT INTO products(name) VALUES ('${name}');`, {})
           .then(result => {
             if(result.insertId) return this.getProduct(result.insertId);
           })
@@ -91,7 +93,7 @@ export class DbServiceProvider {
   deleteProduct(id: number) {
     return this.isReady()
       .then(() => {
-        return this.database.executeSql(`DELETE FROM list WHERE id = ${id}`, [])
+        return this.database.executeSql(`DELETE FROM products WHERE id = ${id}`, [])
       })
       .catch(err => console.error(err));
   }
